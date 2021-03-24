@@ -1,15 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import App from './App';
-import Eggplant from './Eggplant';
-
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    <Eggplant />
   </React.StrictMode>,
   document.getElementById('root')
 );
