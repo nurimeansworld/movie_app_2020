@@ -1,56 +1,35 @@
 // import './App.css';
+import React from "react";
 import PropTypes from "prop-types";
+class App extends React.Component{
 
-function Food({value, color}) {
-  // NOTE:: props.name == { name }
-  // console.log(props);
-  // console.log(props.name);
+  state = {
+    value: '가지'
+  };
 
-  return (
-    <div>
-      <h3>나이가 들면 <span style={{color: color}}>{value}</span>가 맛있어 진대여..</h3>
-    </div>
-  );
-}
+  carrot = () => {
+    // setState() : render()를 호출하면서 state 변경
+    this.setState({value: '당근이'});
+  };
+  addCarrot = () => {
+    // current로 현재 데이터를 바탕으로 실행
+    this.setState(current => ({value: current.value + '당근이'}));
+  };
+  pimento = () => {
+    this.setState({value: '피망이'});
+  };
 
-Food.propTypes = {
-  id: PropTypes.number.isRequired,
-  value: PropTypes.string,
-  color: PropTypes.number
-};
-
-
-const FoodList = [
-  {
-    id : 1,
-    value: "가지",
-    color: "purple",
-  },
-  {
-    id : 2,
-    value: "당근이",
-    color: "orange",
-  },
-  {
-    id : 3,
-    value: "피망이",
-    color: "green",
-  },
-];
-
-function App() {
-  return (
-    <div className="App">
-      <h1>App</h1>
-      <Food value="가지" />
-      <Food value="당근" />
-      <Food value="피망이" />
-
-      { FoodList.map(item => (
-      <Food value={item.value} color={item.color} />
-      ))}
-    </div>
-  );
+  // renter() : 자동적으로 class component의 render 실행
+  render() {
+    return (
+      <div>
+        <h1>나는 {this.state.value}다.</h1>
+        <button onClick={this.carrot}>당근이</button>
+        <button onClick={this.addCarrot}>당근이더하기</button>
+        <button onClick={this.pimento}>피망이</button>
+      </div>
+    );
+  }
 }
 
 export default App;
