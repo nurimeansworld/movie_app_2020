@@ -1,7 +1,8 @@
-// import './App.css';
 import React from "react";
 import axios from "axios";
 import Movie from "./Movie";
+
+import './App.css';
 class App extends React.Component{
 
   state = {
@@ -29,13 +30,17 @@ class App extends React.Component{
     this.getMovies();
   }
 
+
+  
   render() {
     const { isLoading , movies} = this.state;
     return (
       <div>{
       isLoading
-      ? 'Loading...'
-      : movies.map( movie => (
+      // html처럼 보이지만 JSX라서 class 대신 className으로 사용
+      ? (<div className="loader"><span className="loader__text">Loading...</span></div>)
+      : (<div className="movie">
+        {movies.map( movie => (
         <Movie 
           key = { movie.id }
           id = { movie.id }
@@ -43,8 +48,11 @@ class App extends React.Component{
           title = { movie.title }
           summary = { movie.summary }
           poster = { movie.medium_cover_image }
+          // 추가 3. App.js에 추가 
+          genres = { movie.genres }
         />
-        ))
+        ))}
+      </div>)
       }</div>
     );
   }
