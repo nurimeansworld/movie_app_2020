@@ -1,33 +1,51 @@
 // import './App.css';
 import React from "react";
-import PropTypes from "prop-types";
+import axios from "axios";
+import Movie from "./Movie";
 class App extends React.Component{
 
   state = {
-    value: '가지'
+    isLoading: true,
+    movies: []
   };
 
-  carrot = () => {
-    // setState() : render()를 호출하면서 state 변경
-    this.setState({value: '당근이'});
-  };
-  addCarrot = () => {
-    // current로 현재 데이터를 바탕으로 실행
-    this.setState(current => ({value: current.value + '당근이'}));
-  };
-  pimento = () => {
-    this.setState({value: '피망이'});
+  getMovies = async () => {
+
+    // // 1. 직관적인 선언
+    // const movies = await axios.get("https://yts-proxy.now.sh/list_movies.json"); 
+    // console.log(movies.data.data.movies);
+
+    // 2. ES6 속성 사용
+    const {
+      data:{
+        data:{movies}
+      }
+    } = await axios.get("https://yts-proxy.now.sh/list_movies.json"); 
+    
+    this.setState({ movies: movies, isLoading: false });
   };
 
-  // renter() : 자동적으로 class component의 render 실행
+  componentDidMount() {
+    this.getMovies();
+  }
+
   render() {
+    const { isLoading , movies} = this.state;
     return (
-      <div>
-        <h1>나는 {this.state.value}다.</h1>
-        <button onClick={this.carrot}>당근이</button>
-        <button onClick={this.addCarrot}>당근이더하기</button>
-        <button onClick={this.pimento}>피망이</button>
-      </div>
+      <div>{
+      isLoading
+      ? 'Loading...'
+      : movies.map( movie => (
+        <Movie 
+          key = { movie.id }
+          id = { movie.id }
+          year = { movie.year }
+          title = { movie.title }
+          summary = { movie.summary }
+          poster = { movie.medium_cover_image }
+        />
+        ))
+      }</div>
     );
   }
 }
