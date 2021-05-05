@@ -1,7 +1,7 @@
 // import React from "react";
 import PropTypes from "prop-types";
 
-import './Movie.css';
+import 'Movie.css';
 
 // 추가 2. 사용하기 위해 prompt 에 추가
 function Movie({ id, year, title, summary, poster, genres }) {
